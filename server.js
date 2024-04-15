@@ -6,6 +6,8 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const errorHandler = require("./middelwares/errorMiddleware");
+const multer = require('multer');
+const path = require('path');
 
 //routes path
 const authRoutes = require("./routes/authRoutes");
@@ -27,6 +29,31 @@ app.use(morgan("dev"));
 app.use(errorHandler);
 
 const PORT = 8080;
+
+
+
+// // Storage for uploaded PDF files
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'langs/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//   }
+// });
+
+// const upload = multer({ storage: storage });
+
+// app.post('/api/openai/lang', upload.single('pdfFile'), (req, res) => {
+//   if (req.file) {
+//     // console.log('File received:', req.file);
+//     return res.status(200).json("received");
+//   } else {
+//     res.status(400).json('No file uploaded');
+//   }
+// });
+
+
 
 //API routes
 app.use("/api/v1/auth", authRoutes);

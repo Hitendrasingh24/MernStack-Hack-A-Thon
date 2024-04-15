@@ -2,18 +2,18 @@ import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import toast from "react-hot-toast";
 const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  // const loggedIn = JSON.parse(localStorage.getItem("authToken"));
+  const loggedIn = JSON.parse(localStorage.getItem("authToken"));
 
   //handle logout
   const handleLogout = async () => {
     try {
-      // await axios.post("/api/v1/auth/logout");
-      // localStorage.removeItem("authToken");
+      await axios.post("/api/v1/auth/logout");
+      localStorage.removeItem("authToken");
       toast.success("logout successfully ");
       navigate("/login");
     } catch (error) {
@@ -29,9 +29,10 @@ const Navbar = () => {
       sx={{ boxShadow: 3, mb: 2 }}
     >
       <Typography variant="h1" color="primary" fontWeight="bold">
-        AI GPT3 Clone
+        Data Enrichment Tool.
       </Typography>
       
+      {loggedIn ? (
         <>
           <NavLink to="/" p={1}>
             Home
@@ -39,15 +40,20 @@ const Navbar = () => {
           <NavLink to="/login" onClick={handleLogout} p={1}>
             Logout
           </NavLink>
-        {/* </> */}
-        {/* <>
+          <NavLink to="/history" p={1}>
+            History
+          </NavLink>
+        </>
+      ) : (
+        <>
           <NavLink to="/register" p={1}>
             Sign Up
           </NavLink>
           <NavLink to="/login" p={1}>
             Sign In
-          </NavLink> */}
+          </NavLink>
         </>
+      )}
     </Box>
   );
 };

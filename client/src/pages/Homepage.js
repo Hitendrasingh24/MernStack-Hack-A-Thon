@@ -1,9 +1,17 @@
 import React from "react";
+import { useEffect } from "react";
 import { Box, Typography, Card, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DescriptionRounded from "@mui/icons-material/DescriptionRounded";
 const Homepage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken !== "true") {
+      // Navigate to the login page if authToken is not set or not true
+      navigate("/login");
+    }
+  }, []);
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "row" , justifyContent:"center" ,marginLeft:"100px",marginTop:"50px"}}>
@@ -16,9 +24,9 @@ const Homepage = () => {
             sx={{
               boxShadow: 2,
               borderRadius: 5,
-              height: 190,
-              width: 200,
-              marginLeft:"90px",
+              height: 220,
+              width: 250,
+              marginLeft:"110px",
               "&:hover": {
                 border: 2,
                 boxShadow: 0,

@@ -29,7 +29,7 @@ const Login = () => {
     try {
       await axios.post("/api/v1/auth/login", { email, password });
       toast.success("Login Successfully");
-      // localStorage.setItem("authToken", true);
+      localStorage.setItem("authToken", true);
       navigate("/");
     } catch (err) {
       console.log(error);

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link} from "react-router-dom";
 // import toast from "react-hot-toast";
+// import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import pdfToText from 'react-pdftotext'
+
+
 import axios from "axios";
 import {
   Box,
@@ -20,58 +24,85 @@ const Summary = () => {
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
-  const [text, settext] = useState("");
+  const [text, setText] = useState("");
+  // const [selectedFile, setSelectedFile] = React.useState(null);  
   const [summary, setSummary] = useState("");
-  const [error, setError] = useState("");
-
+  const [error1, setError1] = useState("");
+  
+  function extractText(event) {
+    const file = event.target.files[0]
+    try{
+      pdfToText(file)
+      .then(txt => {
+        console.log(txt)
+        // setSummary("adaf");
+        setText(txt);
+      })
+      .catch(error => console.error("Failed to extract text from pdf"))
+    }
+    catch(err){
+      setError1("please upload file in proper format")
+    }
+}
+  
   //register ctrl
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post("/api/v1/openai/summary", { text });
       console.log(data);
-      setSummary(data);
+      const dt = data.replace(/\*\*(.*?)\*\*/g, '<h2>$1</h2>');
+      const sum  = dt.replace(/\*/g, '<br/>');
+      setSummary(sum.trim());
     } catch (err) {
-      console.log(error);
+      console.log(error1);
       if (err.response.data.error) {
-        setError(err.response.data.error);
+        setError1(err.response.data.error);
       } else if (err.message) {
-        setError(err.message);
+        setError1(err.message);
       }
       setTimeout(() => {
-        setError("");
+        setError1("");
       }, 5000);
     }
   };
   return (
     <Box
-      width={isNotMobile ? "40%" : "80%"}
+      width={isNotMobile ? "40%" : "95%"}
       p={"2rem"}
       m={"2rem auto"}
       borderRadius={5}
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={error1}>
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
+          {error1}
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Summarize Text</Typography>
+        <Typography variant="h3">Enrich Text</Typography>
 
         <TextField
-          placeholder="add your text"
-          type="text"
-          multiline={true}
+          placeholder="add your file"
+          type="file"
           required
           margin="normal"
           fullWidth
-          value={text}
-          onChange={(e) => {
-            settext(e.target.value);
-          }}
-        />
+          onChange={extractText}
+          />
+        
+        {/* <Button
+          type="button"
+          fullWidth
+          variant="contained"
+          size="large"
+          sx={{ color: "white", mt: 2 }}
+          onClick={extractText}
+        > */}
+          {/* Extract
+        </Button> */}
 
         <Button
           type="submit"
@@ -93,15 +124,16 @@ const Summary = () => {
             mt: 4,
             border: 1,
             boxShadow: 0,
-            height: "500px",
+            height: "600px",
             borderRadius: 5,
+            overflow: "auto",
             borderColor: "natural.medium",
             bgcolor: "background.default",
           }}
         >
-          <Typography p={4}>{summary}</Typography>
-          {/* <Typography p={4} dangerouslySetInnerHTML={{ __html: summary }} /> */}
-          {/* {summary} */}
+        (
+          {/* <Typography p={4}>{summary}</Typography> */}
+          <Typography p={4} dangerouslySetInnerHTML={{ __html: summary }} />
         </Card>
       ) : (
         <Card
@@ -109,7 +141,7 @@ const Summary = () => {
             mt: 4,
             border: 1,
             boxShadow: 0,
-            height: "500px",
+            height: "600px",
             borderRadius: 5,
             borderColor: "natural.medium",
             bgcolor: "background.default",
@@ -124,7 +156,7 @@ const Summary = () => {
               lineHeight: "450px",
             }}
           >
-            Summary Will Appear Here
+            Data Will Appear Here ...
           </Typography>
         </Card>
       )}
