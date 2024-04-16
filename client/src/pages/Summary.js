@@ -73,6 +73,18 @@ const Summary = () => {
         }
       }
     };
+    
+    const handleCopy = () => {
+      const cleanSummary = summary.replace(/<h2>(.*?)<\/h2>|<br\/>/g, "");
+      navigator.clipboard.writeText(cleanSummary)
+        .then(() => {
+          toast.success("Summary copied to clipboard");
+        })
+        .catch(err => {
+          // console.error("Failed to copy summary to clipboard:", err);
+          toast.error("Failed to copy summary to clipboard");
+        });
+    };
   
   return (
     <Box
@@ -121,6 +133,15 @@ const Summary = () => {
             >
               Save
             </Button>
+            <Button
+        variant="contained"
+        size="large"
+        sx={{ color: "white", mt: 2, borderRadius: "50px" }}
+        onClick={handleCopy}
+      >
+        Copy
+      </Button>
+
       {summary ? (
         <Card
           sx={{

@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(errorHandler);
 
-const PORT = 8080;
+const PORT =process.env.PORT || 8080;
 
 
 
@@ -41,17 +41,6 @@ const PORT = 8080;
 //   }
 // });
 
-// const upload = multer({ storage: storage });
-
-// app.post('/api/openai/lang', upload.single('pdfFile'), (req, res) => {
-//   if (req.file) {
-//     // console.log('File received:', req.file);
-//     return res.status(200).json("received");
-//   } else {
-//     res.status(400).json('No file uploaded');
-//   }
-// });
-// 661d817a0f845f87fd495249
 
 
 
