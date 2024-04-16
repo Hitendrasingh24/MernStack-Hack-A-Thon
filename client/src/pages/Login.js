@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { host } from "../apiRoutes/api";
 import {
   Box,
   Typography,
@@ -22,12 +23,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   //register ctrl
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await axios.post("/api/v1/auth/login", { email, password });
+      const user = await axios.post(`${host}/api/v1/auth/login`, { email, password });
       console.log(user.data.user.email);
       toast.success("Login Successfully");
       localStorage.setItem("emailToken",user.data.user.email );

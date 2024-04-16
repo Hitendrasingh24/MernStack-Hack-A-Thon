@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { host } from "../apiRoutes/api";
 const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/v1/auth/logout");
+      await axios.post(`${host}/api/v1/auth/logout`);
       localStorage.removeItem("authToken");
       localStorage.removeItem("emailToken");
       toast.success("logout successfully ");

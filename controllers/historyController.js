@@ -32,10 +32,6 @@ exports.getSummaryString = async (req, res) => {
   
     try {
       const existingSummary = await TextSummary.findOne({ email });
-      if (!existingSummary) {
-        return res.status(404).json({ error: 'Summary not found' });
-      }
-  
       const summaryArray = existingSummary.summaryArray;
       res.status(200).json({ summaryArray });
     } catch (error) {

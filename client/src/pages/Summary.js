@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 // import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import pdfToText from 'react-pdftotext'
 import axios from "axios";
+import { host } from "../apiRoutes/api";
 import {
   Box,
   Typography,
@@ -44,7 +45,7 @@ const Summary = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/summary", { text });
+      const { data } = await axios.post(`${host}/api/v1/openai/summary`, { text });
       console.log(data);
       const dt = data.replace(/\*\*(.*?)\*\*/g, '<h2>$1</h2>');
       const sum  = dt.replace(/\*/g, '<br/>');
@@ -67,7 +68,7 @@ const Summary = () => {
       }  
       else{
         const email = localStorage.getItem("emailToken");
-        const response = await axios.post('api/v1/summary/save', { email,summary});
+        const response = await axios.post(`${host}api/v1/summary/save`, { email,summary});
         if(response){
           toast.success("Saved History Successfully");
         }

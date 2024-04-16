@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import HistoryComponent from '../components/HistoryComponent';
+import { host } from '../apiRoutes/api';
 import {
   Box,
   Typography,
   useMediaQuery,
   useTheme
 } from "@mui/material";
-
 
 export default function History() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function History() {
 
     const fetchSummaryArray = async () => {
       try {
-        const response = await axios.get('/api/v1/summary/get', {
+        const response = await axios.get(`${host}/api/v1/summary/get`, {
           params: { email: userEmail }
         });
         setSummaryArray(response.data.summaryArray);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { host } from "../apiRoutes/api";
 import {
   Box,
   Typography,
@@ -27,7 +28,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/register", { username, email, password });
+      await axios.post(`${host}/api/v1/auth/register`, { username, email, password });
       toast.success("User Register Successfully");
       navigate("/login");
     } catch (err) {
