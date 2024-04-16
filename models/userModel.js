@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-// const JWT = require("jsonwebtoken");
+const JWT = require("jsonwebtoken");
 // const cookie = require("cookie");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 //models
 const userSchema = new mongoose.Schema({
@@ -19,14 +22,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password length should be 6 character long"],
   },
-  customerId: {
-    type: String,
-    default: "",
-  },
-  subscription: {
-    type: String,
-    default: "",
-  },
+  
 });
 
 //hashed password
@@ -49,13 +45,13 @@ userSchema.methods.matchPassword = async function (password) {
 // userSchema.methods.getSignedToken = function (res) {
 //   const acccesToken = JWT.sign(
 //     { id: this._id },
-//     process.env.JWT_ACCESS_SECRET,
-//     { expiresIn: process.env.JWT_ACCESS_EXPIREIN }
+//     process.env.SECRET_KEY,
+//     { expiresIn: process.env.EXPIRE }
 //   );
 //   const refreshToken = JWT.sign(
 //     { id: this._id },
-//     process.env.JWT_REFRESH_TOKEN,
-//     { expiresIn: process.env.JWT_REFRESH_EXIPREIN }
+//     process.env.REF_TOKEN,
+//     { expiresIn: process.env.REF_EXIPRE }
 //   );
 //   res.cookie("refreshToken", `${refreshToken}`, {
 //     maxAge: 86400 * 7000,

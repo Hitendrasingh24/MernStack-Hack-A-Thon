@@ -6,12 +6,11 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const errorHandler = require("./middelwares/errorMiddleware");
-const multer = require('multer');
-const path = require('path');
+
 
 //routes path
 const authRoutes = require("./routes/authRoutes");
-
+const summaryRoutes = require("./routes/summaryRoutes");
 //dotenv
 dotenv.config();
 
@@ -52,12 +51,14 @@ const PORT = 8080;
 //     res.status(400).json('No file uploaded');
 //   }
 // });
+// 661d817a0f845f87fd495249
 
 
 
 //API routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/openai", require("./routes/openaiRoutes"));
+app.use("/api/v1/summary", summaryRoutes);
 
 //listen server
 app.listen(PORT, () => {

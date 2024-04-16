@@ -27,8 +27,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/login", { email, password });
+      const user = await axios.post("/api/v1/auth/login", { email, password });
+      console.log(user.data.user.email);
       toast.success("Login Successfully");
+      localStorage.setItem("emailToken",user.data.user.email );
       localStorage.setItem("authToken", true);
       navigate("/");
     } catch (err) {

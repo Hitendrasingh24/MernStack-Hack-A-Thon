@@ -54,14 +54,14 @@ exports.loginController = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     next(error);
   }
 };
 
 //LOGOUT
 exports.logoutController = async (req, res) => {
-  // res.clearCookie("refreshToken");
+  res.clearCookie("refreshToken");
   return res.status(200).json({
     success: true,
     message: "Logout Succesfully",

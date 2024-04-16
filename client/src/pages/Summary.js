@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 // import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import pdfToText from 'react-pdftotext'
-
-
 import axios from "axios";
 import {
   Box,
@@ -67,6 +64,25 @@ const Summary = () => {
       }, 5000);
     }
   };
+    // Function to handle saving user's text summary history
+    const handleSave = async () => {
+      // Implement your logic to save the summary to user's history
+      // For example, you can send an HTTP request to your backend to save the summary
+      if(text===""){
+        toast.error("No data present");
+      }  
+      else{
+        const email = localStorage.getItem("emailToken");
+        // const sum = text;
+        const response = await axios.post('api/v1/summary/save', { email,summary});
+        if(response){
+          toast.success("Saved History Successfully");
+        }
+      }
+      // console.log("Save button clicked, summary:", summary);
+      // Add your logic here to save the summary
+    };
+  
   return (
     <Box
       width={isNotMobile ? "40%" : "95%"}
@@ -93,17 +109,7 @@ const Summary = () => {
           onChange={extractText}
           />
         
-        {/* <Button
-          type="button"
-          fullWidth
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-          onClick={extractText}
-        > */}
-          {/* Extract
-        </Button> */}
-
+      
         <Button
           type="submit"
           fullWidth
@@ -113,15 +119,21 @@ const Summary = () => {
         >
           Submit
         </Button>
-        <Typography mt={2}>
-          not this tool ? <Link to="/">GO BACK</Link>
-        </Typography>
+     
       </form>
-
+      
+      <Button
+              variant="contained"
+              size="large"
+              sx={{ color: "white", mt: 2 ,borderRadius:"50px" }}
+              onClick={handleSave}
+            >
+              Save
+            </Button>
       {summary ? (
         <Card
           sx={{
-            mt: 4,
+            mt: 1,
             border: 1,
             boxShadow: 0,
             height: "600px",
@@ -131,14 +143,14 @@ const Summary = () => {
             bgcolor: "background.default",
           }}
         >
-        (
+        {/* ( */}
           {/* <Typography p={4}>{summary}</Typography> */}
           <Typography p={4} dangerouslySetInnerHTML={{ __html: summary }} />
         </Card>
       ) : (
         <Card
           sx={{
-            mt: 4,
+            mt: 1,
             border: 1,
             boxShadow: 0,
             height: "600px",

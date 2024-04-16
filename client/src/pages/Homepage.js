@@ -11,7 +11,7 @@ const Homepage = () => {
       // Navigate to the login page if authToken is not set or not true
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "row" , justifyContent:"center" ,marginLeft:"100px",marginTop:"50px"}}>
