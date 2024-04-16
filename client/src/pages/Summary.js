@@ -22,7 +22,6 @@ const Summary = () => {
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, setText] = useState("");
-  // const [selectedFile, setSelectedFile] = React.useState(null);  
   const [summary, setSummary] = useState("");
   const [error1, setError1] = useState("");
   
@@ -32,7 +31,6 @@ const Summary = () => {
       pdfToText(file)
       .then(txt => {
         console.log(txt)
-        // setSummary("adaf");
         setText(txt);
       })
       .catch(error => console.error("Failed to extract text from pdf"))
@@ -42,7 +40,6 @@ const Summary = () => {
     }
 }
   
-  //register ctrl
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,23 +61,17 @@ const Summary = () => {
       }, 5000);
     }
   };
-    // Function to handle saving user's text summary history
     const handleSave = async () => {
-      // Implement your logic to save the summary to user's history
-      // For example, you can send an HTTP request to your backend to save the summary
       if(text===""){
         toast.error("No data present");
       }  
       else{
         const email = localStorage.getItem("emailToken");
-        // const sum = text;
         const response = await axios.post('api/v1/summary/save', { email,summary});
         if(response){
           toast.success("Saved History Successfully");
         }
       }
-      // console.log("Save button clicked, summary:", summary);
-      // Add your logic here to save the summary
     };
   
   return (

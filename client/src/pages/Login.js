@@ -34,8 +34,9 @@ const Login = () => {
       localStorage.setItem("authToken", true);
       navigate("/");
     } catch (err) {
+      toast.error("enter valid credentials");
       console.log(error);
-      if (err.response.data.error) {
+      if (err.response.data) {
         setError(err.response.data.error);
       } else if (err.message) {
         setError(err.message);

@@ -9,7 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("authToken"));
 
-  //handle logout
+
   const handleLogout = async () => {
     try {
       await axios.post("/api/v1/auth/logout");

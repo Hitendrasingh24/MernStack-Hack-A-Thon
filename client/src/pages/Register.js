@@ -9,7 +9,6 @@ import {
   useMediaQuery,
   TextField,
   Button,
-  Alert,
   Collapse,
 } from "@mui/material";
 
@@ -32,10 +31,12 @@ const Register = () => {
       toast.success("User Register Successfully");
       navigate("/login");
     } catch (err) {
+      toast.error("email already exists");
       console.log(error);
       if (err.response.data.error) {
         setError(err.response.data.error);
-      } else if (err.message) {
+      } 
+      else if (err.message) {
         setError(err.message);
       }
       setTimeout(() => {
@@ -53,9 +54,9 @@ const Register = () => {
       backgroundColor={theme.palette.background.alt}
     >
       <Collapse in={error}>
-        <Alert severity="error" sx={{ mb: 2 }}>
+        {/* <Alert severity="error" sx={{ mb: 2 }}>
           {error}
-        </Alert>
+        </Alert> */}
       </Collapse>
       <form onSubmit={handleSubmit}>
         <Typography variant="h3">Sign Up</Typography>

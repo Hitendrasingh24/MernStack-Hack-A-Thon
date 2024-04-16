@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the schema for the text summary data
 const textSummarySchema = new mongoose.Schema({
   email: {
     type: String,

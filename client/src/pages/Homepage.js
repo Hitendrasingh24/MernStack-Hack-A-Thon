@@ -8,7 +8,6 @@ const Homepage = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken !== "true") {
-      // Navigate to the login page if authToken is not set or not true
       navigate("/login");
     }
   }, [navigate]);
@@ -26,7 +25,7 @@ const Homepage = () => {
               borderRadius: 5,
               height: 220,
               width: 250,
-              marginLeft:"110px",
+              marginLeft:"1vw",
               "&:hover": {
                 border: 2,
                 boxShadow: 0,

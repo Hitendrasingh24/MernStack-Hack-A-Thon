@@ -6,21 +6,17 @@ exports.saveSummaryString = async (req, res) => {
   const { email, summary } = req.body;
 
   try {
-    // Check if there is an existing TextSummary document for the given gmail
     let existingSummary = await TextSummary.findOne({ email });
 
-    // If no existing document is found, create a new one
     if (!existingSummary) {
       existingSummary = new TextSummary({
         email,
         summaryArray: [ summary] // Initialize summaryArray with the first summary string
       });
     } else {
-      // If an existing document is found, push the new summary string to the summaryArray
       existingSummary.summaryArray.push( summary);
     }
 
-    // Save the updated/created TextSummary document
     await existingSummary.save();
 
     res.status(201).json({ message: 'Summary string saved successfully' });

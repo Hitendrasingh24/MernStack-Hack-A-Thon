@@ -14,26 +14,27 @@ import {
 
 export default function History() {
   const navigate = useNavigate();
-
   const theme = useTheme();
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
 
+  const[num,setNum] = useState(0);
   const [summaryArray, setSummaryArray] = useState([]);
   const [email, setEmail] = useState("");
   
+  useEffect(() => {
+    setNum(summaryArray.length);
+  }, [summaryArray]);
 
   useEffect(() => {
     // Get email from local storage
     const userEmail = localStorage.getItem("emailToken");
     if(!userEmail) {
-      // Navigate to the login page if authToken is not set or not true
       navigate("/login");
     }
     if (userEmail) {
       setEmail(userEmail);
     }
 
-    // Fetch summary array from backend API when the component mounts
     const fetchSummaryArray = async () => {
       try {
         const response = await axios.get('/api/v1/summary/get', {
@@ -45,10 +46,8 @@ export default function History() {
       }
     };
 
-    fetchSummaryArray(); // Call the fetchSummaryArray function
-  }, []); // Empty dependency array ensures this effect runs only once after initial mount
-
-  
+    fetchSummaryArray(); 
+  }, []); 
   return (
     <>
        <Box
@@ -60,7 +59,7 @@ export default function History() {
       backgroundColor={theme.palette.background.alt}
     >
      
-        <Typography variant="h3">Your History:-</Typography>
+        <Typography variant="h3">Your History:-{num} Items</Typography>
       <div>
         {summaryArray.map((summary, index) => (
           <HistoryComponent key={index} sum={summary} />
