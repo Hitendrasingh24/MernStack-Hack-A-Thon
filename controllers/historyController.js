@@ -11,7 +11,7 @@ exports.saveSummaryString = async (req, res) => {
     if (!existingSummary) {
       existingSummary = new TextSummary({
         email,
-        summaryArray: [ summary] // Initialize summaryArray with the first summary string
+        summaryArray: [ summary] 
       });
     } else {
       existingSummary.summaryArray.push( summary);
@@ -28,14 +28,20 @@ exports.saveSummaryString = async (req, res) => {
 
 
 exports.getSummaryString = async (req, res) => {
-    const { email } = req.query; 
-  
-    try {
+  const { email } = req.query; 
+
+  try {
       const existingSummary = await TextSummary.findOne({ email });
+      
+      if (!existingSummary) {
+          // No summary found for the user, send an empty array
+          return res.status(200).json({ summaryArray: [] });
+      }
+      
       const summaryArray = existingSummary.summaryArray;
       res.status(200).json({ summaryArray });
-    } catch (error) {
-      console.error(error);
+  } catch (error) {
+      // console.error(error);
       res.status(500).json({ error: 'Internal server error' });
-    }
-  };
+  }
+};

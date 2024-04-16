@@ -68,7 +68,7 @@ const Summary = () => {
       }  
       else{
         const email = localStorage.getItem("emailToken");
-        const response = await axios.post(`${host}api/v1/summary/save`, { email,summary});
+        const response = await axios.post(`${host}/api/v1/summary/save`, { email,summary});
         if(response){
           toast.success("Saved History Successfully");
         }
