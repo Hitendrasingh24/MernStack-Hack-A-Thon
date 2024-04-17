@@ -1,6 +1,7 @@
 # Enhanced Text Extractor Tool
 
 ##Problem Statement: 
+
 The problem is to develop an Enhanced Text Extraction and Enrichment tool that 
 allows users to upload files, extract text from various formats such as PDF, and 
 enrich the extracted data using external APIs like OpenAI or Gemini. The tool should 
@@ -8,6 +9,7 @@ provide a user-friendly interface for seamless file uploads, data display, and
 interactive text processing. 
 
 ##Objective: 
+
 • Text Extraction: Implement text extraction functionality to extract text from 
 uploaded files, with support for various formats including PDF. 
 • Data Enrichment: Utilize external APIs like OpenAI or Gemini to enrich extracted 
@@ -25,6 +27,7 @@ processes.
 mechanisms to secure access to the application and protect user data. 
 
 ##Client-side Code Description: 
+
 The frontend part of the Coding Blocks-Enhanced Text Extractor Tool project is 
 designed to provide a seamless and intuitive user experience. Here's a detailed 
 description of the frontend components and technologies used: 
@@ -43,6 +46,7 @@ viewing past extractions.
 4. Routing with react-router-dom: React Router is used for client-side routing.
 
 ##Server-side Description:
+
 The server-side functionalities of the Extract and Enrich Text Tool are designed to 
 provide a robust infrastructure for text extraction, enrichment, and user interaction. 
 The backend architecture encompasses key components such as Node.js for serverside JavaScript execution, Express.js for API development, MongoDB for data 
